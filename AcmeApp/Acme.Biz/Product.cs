@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Console;
 
 namespace Acme.Biz
 {
@@ -16,6 +17,31 @@ namespace Acme.Biz
         #region Constructors
         public Product()
         {
+            //var colorOptions = new string[4];
+            //colorOptions[0] = "Red";
+            //colorOptions[1] = "Espresso";
+            //colorOptions[2] = "White";
+            //colorOptions[3] = "Navy";
+
+            //using Collection Initializers
+            //  var colorOptions = new string[4] { "Red", "Espresso", "White", "Navy" };
+            //Or We can write it another way by reducing new Clause (Best Practices for getting Array)
+            string[] colorOptions = { "Red", "Espresso", "White", "Navy" };
+
+            // give the index of the current element(Example of static Array method)
+            var brownIndex=  Array.IndexOf(colorOptions, "Espresso");
+            //Example of instance method array
+            colorOptions.SetValue("Blue", 3);
+            for (int i = 0; i < colorOptions.Length; i++)
+            {
+                colorOptions[i] = colorOptions[i].ToLower();
+            }
+            foreach (var color in colorOptions)
+            {
+                WriteLine($"The color is {color}");
+            }
+            //WriteLine(colorOptions[1]);
+
         }
         public Product(int productId,
                         string productName,
