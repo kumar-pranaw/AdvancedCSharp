@@ -17,6 +17,21 @@ namespace Acme.Biz
         #region Constructors
         public Product()
         {
+            #region Generic List
+            //using Collection Initializers
+            var colorOptions = new List<string>()
+                                   { "red","Espresso","White","navy"};
+            //colorOptions.Add("Red");
+            //colorOptions.Add("Espresso");
+            //colorOptions.Add("White");
+            //colorOptions.Add("Navy");
+            //colorOptions.Insert(2, "Purple");
+            //colorOptions.Remove("White");
+            WriteLine(colorOptions);
+
+
+
+
             //var colorOptions = new string[4];
             //colorOptions[0] = "Red";
             //colorOptions[1] = "Espresso";
@@ -26,21 +41,40 @@ namespace Acme.Biz
             //using Collection Initializers
             //  var colorOptions = new string[4] { "Red", "Espresso", "White", "Navy" };
             //Or We can write it another way by reducing new Clause (Best Practices for getting Array)
-            string[] colorOptions = { "Red", "Espresso", "White", "Navy" };
+            // string[] colorOptions = { "Red", "Espresso", "White", "Navy" };
 
             // give the index of the current element(Example of static Array method)
-            var brownIndex=  Array.IndexOf(colorOptions, "Espresso");
+            //var brownIndex=  Array.IndexOf(colorOptions, "Espresso");
             //Example of instance method array
-            colorOptions.SetValue("Blue", 3);
-            for (int i = 0; i < colorOptions.Length; i++)
-            {
-                colorOptions[i] = colorOptions[i].ToLower();
-            }
-            foreach (var color in colorOptions)
-            {
-                WriteLine($"The color is {color}");
-            }
+            //colorOptions.SetValue("Blue", 3);
+            //for (int i = 0; i < colorOptions.Length; i++)
+            //{
+            //    colorOptions[i] = colorOptions[i].ToLower();
+            //}
+            //foreach (var color in colorOptions)
+            //{
+            //    WriteLine($"The color is {color}");
+            //}
             //WriteLine(colorOptions[1]);
+            #endregion
+
+
+
+            var states = new Dictionary<string, string>()
+            {
+                { "CA", "California"},
+                {"WA", "Washington" },
+                { "CO", "Colorado Springs"},
+                {"CO", "Colorado Springs" }
+            };
+            WriteLine(states);
+
+            //states.Add("CA", "California");
+            //states.Add("WA", "Washington");
+            //states.Add("NY", "New York");
+            //states.Add("CO", "Colorado Springs");
+           
+
 
         }
         public Product(int productId,
