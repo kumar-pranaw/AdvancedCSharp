@@ -8,9 +8,38 @@ using System.Threading.Tasks;
 
 namespace Acme.Biz.Tests
 {
+
     [TestClass()]
     public class VendorRepositoryTests
     {
+        [TestMethod()]
+        public void RetrieveAllTest()
+        {
+            var repository = new VendorRepository();
+            var expected = new List<Vendor>()
+            {
+                {new Vendor() { VendorId = 1, CompanyName = "Tech Technossus", Email = "pranav@technossus.com" }},
+                {new Vendor() { VendorId = 2, CompanyName = "Tech Infosys", Email = "pranav@infosys.com" } },
+                {new Vendor() { VendorId = 3, CompanyName = "Tech LiveDeftsoft", Email = "pranav@technossus.com" }},
+                {new Vendor() { VendorId = 4, CompanyName = "Tech TCS", Email = "pranav@technossus.com" }}
+            };
+
+            //Act
+            var vendors = repository.RetrieveAll();
+            //var vendorQuery = from v in vendors
+            //                  where v.CompanyName.Contains("Tech")
+            //                  orderby v.CompanyName
+            //                  select v;
+            var vendorQuery = vendors.Where(FilterCompanies)
+                .OrderBy(OrderCompaniesByName);
+
+            //Assert
+            CollectionAssert.AreEqual(expected, vendorQuery.ToList());
+        }
+        private bool FilterCompanies(Vendor v)=>
+             v.CompanyName.Contains("Tech");
+        private string OrderCompaniesByName(Vendor v) => v.CompanyName;
+        
         [TestMethod()]
         public void RetrievevalueTest()
         {
@@ -60,7 +89,43 @@ namespace Acme.Biz.Tests
             expected.Add(new Vendor() { VendorId = 2, CompanyName = "Infosys", Email = "pranav@infosys.com" });
 
             //Act
-            var actual = repository.Retrieve();
+            var actual = repository.Retrieve().ToList();
+            //Assert
+            CollectionAssert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void RetrieveWithKeysTest()
+        {
+            var repository = new VendorRepository();
+            var expected = new Dictionary<string, Vendor>()
+            {
+               {"T", new Vendor(){ VendorId = 1, CompanyName = "Technossus", Email = "pranav@technossus.com"} },
+               {"I", new Vendor(){VendorId = 2, CompanyName = "Infosys", Email = "pranav@infosys.com" } }
+            };
+            //Act
+            var actual = repository.RetrieveWithKeys();
+            //Assert
+            CollectionAssert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void RetrieveWithIteratorTest()
+        {
+            //Arrange
+            var repository = new VendorRepository();
+            var expected = new List<Vendor>()
+            {
+                { new Vendor(){ VendorId=1, CompanyName="Technossus", Email="pranav@technossus.com"} },
+                 { new Vendor(){VendorId = 2, CompanyName = "Infosys", Email = "pranav@infosys.com" } }
+            };
+            //Act
+            var vendorIterator = repository.RetrieveWithIterator();
+            foreach (var item in vendorIterator)
+            {
+                Console.WriteLine(item);
+            }
+            var actual = vendorIterator.ToList();
             //Assert
             CollectionAssert.AreEqual(expected, actual);
         }

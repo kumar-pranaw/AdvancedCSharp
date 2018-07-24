@@ -34,7 +34,7 @@ namespace Acme.Biz
         /// Retrieves all of the approved vendors
         /// </summary>
         /// <returns></returns>
-        public List<Vendor> Retrieve()
+        public ICollection<Vendor> Retrieve()
         {
             if (vendors == null)
             {
@@ -52,7 +52,33 @@ namespace Acme.Biz
                 {"T", new Vendor(){ VendorId = 1, CompanyName = "Technossus", Email = "pranav@technossus.com"} },
                 {"I", new Vendor(){VendorId = 2, CompanyName = "Infosys", Email = "pranav@infosys.com" } }
             };
-            Console.WriteLine(vendors);
+            foreach (var element in vendors)
+            {
+                var vendor = element.Value;
+                var key = element.Key;
+                WriteLine($"Key: {key} Value: {vendor}");
+
+            }
+            foreach (var vendor in vendors.Values)
+            {
+                WriteLine(vendor);
+            }
+
+            foreach (var companyName in vendors.Keys)
+            {
+                WriteLine(vendors[companyName]);
+            }
+
+            //if(vendors.ContainsKey("A"))
+            //{
+            //    WriteLine(vendors["A"]);
+            //}
+            //Vendor vendor;
+            //if(vendors.TryGetValue("A", out vendor))
+            //{
+            //    WriteLine(vendor);
+            //}
+            //Console.WriteLine(vendors);
             return vendors;
         }
         public T Retrievevalue<T>(string sql, T defaultValue)
@@ -74,6 +100,38 @@ namespace Acme.Biz
             // Code that saves the vendor
 
             return success;
+        }
+        /// <summary>
+        /// Retrieves all of the approved vendors, one at a time
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Vendor> RetrieveWithIterator()
+        {
+            this.Retrieve();
+            foreach (var vendor in vendors)
+            {
+                WriteLine($"Vendor Id: {vendor.VendorId}");
+                yield return vendor;
+            }
+        }
+
+        public IEnumerable<Vendor> RetrieveAll()
+        {
+            var vendors = new List<Vendor>()
+            {
+                {new Vendor() { VendorId = 1, CompanyName = "Tech Technossus", Email = "pranav@technossus.com" }},
+                {new Vendor() { VendorId = 2, CompanyName = "Tech Infosys", Email = "pranav@infosys.com" } },
+                {new Vendor() { VendorId = 3, CompanyName = "Tech LiveDeftsoft", Email = "pranav@technossus.com" }},
+                {new Vendor() { VendorId = 4, CompanyName = "Tech TCS", Email = "pranav@technossus.com" }},
+                {new Vendor() { VendorId = 5, CompanyName = "Biorad", Email = "pranav@infosys.com" } },
+                {new Vendor() { VendorId = 6, CompanyName = "Helix", Email = "pranav@technossus.com" }},
+                {new Vendor() { VendorId = 7, CompanyName = "Word and Brown", Email = "pranav@infosys.com" } },
+                {new Vendor() { VendorId = 8, CompanyName = "Hp", Email = "pranav@technossus.com" }},
+                {new Vendor() { VendorId = 9, CompanyName = "Dell", Email = "pranav@infosys.com" } },
+                {new Vendor() { VendorId =10, CompanyName = "Lenovo", Email = "pranav@infosys.com" } },
+            };                                               
+            return vendors;                                  
+
         }
     }
 }
